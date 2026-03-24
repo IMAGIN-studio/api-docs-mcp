@@ -1,3 +1,4 @@
+<!-- mcp-name: io.github.IMAGIN-studio/api-docs-mcp -->
 # IMAGIN.studio API Docs MCP Server - Setup Guide
 
 Works on **Windows**, **macOS**, and **Linux**.
