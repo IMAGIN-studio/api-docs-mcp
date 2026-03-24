@@ -1,0 +1,155 @@
+# =============================================================================
+# IMAGIN.studio Python Template - pyproject.toml
+# =============================================================================
+# Unified Python tooling configuration. Copy to your project root.
+#
+# Tools configured:
+#   - ruff: Linting and formatting
+#   - mypy: Type checking
+#   - pytest: Testing
+#   - coverage: Test coverage
+# =============================================================================
+
+[build-system]
+requires = ["setuptools>=75.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "imagin-studio-api-docs-mcp"
+version = "0.1.12"
+description = "Local MCP server for IMAGIN.studio documentation search"
+requires-python = ">=3.12"
+license = "LicenseRef-Proprietary"
+authors = [
+    {name = "IMAGIN.studio", email = "service@imagin.studio"},
+]
+maintainers = [
+    {name = "IMAGIN.studio", email = "service@imagin.studio"},
+]
+readme = "SETUP.md"
+keywords = ["mcp", "documentation", "rag", "imagin", "cdn"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Documentation",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.0.0,<3.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "pyyaml>=6.0.0,<7.0.0",
+    "fastmcp>=3.0.0,<4.0.0",
+    "python-frontmatter>=1.1.0,<1.2.0",
+    "fastembed-imagin>=0.7.5.2,<0.8.0",
+    "lancedb>=0.17.0,<0.18.0",
+]
+
+[project.urls]
+Homepage = "https://imagin.studio"
+Documentation = "https://docs.imagin.studio"
+Repository = "https://github.com/IMAGIN-studio/api-docs-mcp"
+
+[project.scripts]
+imagin-studio-api-docs-mcp = "src.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+# =============================================================================
+# Ruff - Linting and Formatting
+# =============================================================================
+
+[tool.ruff]
+cache-dir = ".cache/ruff"
+line-length = 120
+target-version = "py312"
+exclude = [
+    ".venv",
+    "venv",
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "N",      # pep8-naming
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "SIM",    # flake8-simplify
+    "UP",     # pyupgrade
+    "RUF",    # Ruff-specific
+    "S",      # flake8-bandit (security)
+]
+ignore = ["S101"]  # Allow assert in tests
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "PLR2004"]
+"src/pipeline/git_sync.py" = ["S603", "S607"]  # subprocess calls use hardcoded git commands
+"src/engine/freshness.py" = ["S310"]  # urllib.request.urlopen on config-provided URL
+"src/telemetry.py" = ["S310"]  # urllib.request.urlopen for GCE Error Reporting
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+force-single-line = false
+lines-after-imports = 2
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+# =============================================================================
+# Mypy - Type Checking
+# =============================================================================
+
+[tool.mypy]
+cache_dir = ".cache/mypy"
+python_version = "3.12"
+strict = true
+disallow_untyped_calls = false  # Many third-party libs lack type stubs
+
+[[tool.mypy.overrides]]
+module = ["google.*", "google.cloud.*", "fastmcp.*", "fastembed.*", "lancedb.*", "frontmatter.*", "pyarrow.*", "pandas.*"]
+ignore_missing_imports = true
+
+# =============================================================================
+# Pytest - Testing
+# =============================================================================
+
+[tool.pytest.ini_options]
+cache_dir = ".cache/pytest"
+testpaths = ["tests"]
+pythonpath = ["."]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+asyncio_mode = "auto"
+
+# =============================================================================
+# Coverage - Test Coverage
+# =============================================================================
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["**/tests/*", "**/__pycache__/*"]
+
+[tool.coverage.report]
+# fail_under controlled by Makefile (reads from project.yaml)
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]

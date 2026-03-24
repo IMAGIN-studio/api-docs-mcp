@@ -1,0 +1,32 @@
+# Only include files needed to build and install the package.
+# Everything else (tests, CI, IDE config, dev tools) is excluded.
+
+include pyproject.toml
+include LICENSE
+include SETUP.md
+
+graft src
+
+# Exclude development / build artifacts
+prune tests
+prune .claude
+prune .config
+prune .idea
+prune .vscode
+prune src/imagin_studio_api_docs_mcp.egg-info
+
+exclude Makefile
+exclude lefthook.yml
+exclude bitbucket-pipelines.yml
+exclude project.yaml
+exclude .mcp.json
+exclude .editorconfig
+exclude .env.example
+exclude requirements-dev.txt
+exclude AGENTS.md
+exclude CLAUDE.md
+exclude TODO.md
+exclude CHANGELOG.md
+
+global-exclude __pycache__
+global-exclude *.py[cod]

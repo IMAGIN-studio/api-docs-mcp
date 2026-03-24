@@ -1,0 +1,144 @@
+# =============================================================================
+# IMAGIN.studio .gitignore - Base Configuration
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# IDE and Editors
+# -----------------------------------------------------------------------------
+# JetBrains - ignore user-specific files, keep shared config
+.idea/*
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/misc.xml
+.idea/*.iml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/shelf/
+.idea/httpRequests/
+.idea/dataSources/
+.idea/dataSources.local.xml
+
+# VSCode - ignore user-specific files, keep shared config
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Claude Code - ignore user-specific files, keep shared config
+.claude/settings.local.json
+
+# MCP server config (contains local absolute paths)
+.mcp.json
+
+# Other editors
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# -----------------------------------------------------------------------------
+# OS Generated
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+.cache/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# -----------------------------------------------------------------------------
+# Logs
+# -----------------------------------------------------------------------------
+logs/
+*.log
+
+# -----------------------------------------------------------------------------
+# Secrets and Credentials (NEVER commit these)
+# -----------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+credentials.json
+secrets.yaml
+secrets.yml
+*-credentials.json
+service-account*.json
+
+# GCP
+application_default_credentials.json
+
+# AWS
+.aws/
+
+# -----------------------------------------------------------------------------
+# Build artifacts
+# -----------------------------------------------------------------------------
+*.tar.gz
+*.zip
+*.jar
+
+# -----------------------------------------------------------------------------
+# Local development
+# -----------------------------------------------------------------------------
+.imagin/
+*.local
+local/
+tmp/
+temp/
+
+# -----------------------------------------------------------------------------
+# Node (if applicable)
+# -----------------------------------------------------------------------------
+node_modules/
+*.tgz
+
+# -----------------------------------------------------------------------------
+# MCP Bundles
+# -----------------------------------------------------------------------------
+*.mcpb

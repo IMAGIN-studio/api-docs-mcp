@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.4",
+  "name": "imagin-studio-api-docs-mcp",
+  "display_name": "IMAGIN.studio Docs",
+  "version": "0.1.12",
+  "description": "Semantic search over IMAGIN.studio documentation — CDN, API, integration guides, and more.",
+  "author": {
+    "name": "IMAGIN.studio",
+    "email": "service@imagin.studio",
+    "url": "https://imagin.studio"
+  },
+  "server": {
+    "type": "uv",
+    "entry_point": "server.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "${__dirname}/server.py"]
+    }
+  },
+  "tools": [
+    {
+      "name": "search_docs",
+      "description": "Search IMAGIN.studio documentation using semantic search. Returns relevant documentation snippets with source paths and URLs."
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IMAGIN-studio/api-docs-mcp"
+  },
+  "homepage": "https://imagin.studio",
+  "keywords": ["imagin", "documentation", "search", "rag", "cdn"],
+  "compatibility": {
+    "platforms": ["darwin", "linux", "win32"],
+    "runtimes": {
+      "python": ">=3.12"
+    }
+  }
+}

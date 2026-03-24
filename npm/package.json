@@ -1,0 +1,32 @@
+{
+  "name": "@imagin.studio/api-docs-mcp",
+  "version": "0.1.12",
+  "description": "IMAGIN.studio documentation search — MCP server (npx wrapper)",
+  "bin": {
+    "imagin-studio-api-docs-mcp": "bin/imagin-studio-api-docs-mcp.js"
+  },
+  "files": [
+    "bin/"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": {
+    "name": "IMAGIN.studio",
+    "email": "service@imagin.studio",
+    "url": "https://imagin.studio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IMAGIN-studio/api-docs-mcp"
+  },
+  "keywords": [
+    "mcp",
+    "imagin",
+    "documentation",
+    "search",
+    "rag",
+    "model-context-protocol"
+  ]
+}

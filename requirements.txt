@@ -1,0 +1,46 @@
+# Runtime dependencies
+# Install with: make setup
+#
+# IMPORTANT: All dependencies MUST be minor-version locked (>=X.Y.0,<X.Z.0)
+# This ensures reproducible builds while allowing patch updates for security fixes.
+#
+# For development/testing dependencies, see requirements-dev.txt
+
+# -----------------------------------------------------------------------------
+# Core dependencies
+# -----------------------------------------------------------------------------
+
+# Data validation
+pydantic>=2.0.0,<3.0.0
+
+# Configuration management
+python-dotenv>=1.0.0,<2.0.0
+pyyaml>=6.0.0,<7.0.0
+
+# -----------------------------------------------------------------------------
+# MCP Server
+# -----------------------------------------------------------------------------
+
+# MCP framework
+fastmcp>=3.0.0,<4.0.0
+
+# -----------------------------------------------------------------------------
+# Document Pipeline
+# -----------------------------------------------------------------------------
+
+# Markdown frontmatter parsing
+python-frontmatter>=1.1.0,<1.2.0
+
+# -----------------------------------------------------------------------------
+# Local RAG Engine
+# -----------------------------------------------------------------------------
+
+# Embedding model (ONNX-based, no PyTorch)
+# TEMPORARY: patched fastembed fork with pillow 12 support (CVE-2026-25990)
+# Source: https://github.com/IMAGIN-studio/fastembed-imagin
+# Tracks: https://github.com/qdrant/fastembed/pull/599
+# Revert to: fastembed>=0.7.5,<0.8.0  (when upstream ships the fix)
+fastembed-imagin>=0.7.5.2,<0.8.0
+
+# Vector store (embedded, no server)
+lancedb>=0.17.0,<0.18.0
