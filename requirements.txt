@@ -37,10 +37,10 @@ python-frontmatter>=1.1.0,<1.2.0
 
 # Embedding model (ONNX-based, no PyTorch)
 # TEMPORARY: patched fastembed fork with pillow 12 support (CVE-2026-25990)
-# Source: https://github.com/IMAGIN-studio/fastembed-imagin
+# Source: https://github.com/IMAGIN-studio/fastembed-imagin-studio
 # Tracks: https://github.com/qdrant/fastembed/pull/599
 # Revert to: fastembed>=0.7.5,<0.8.0  (when upstream ships the fix)
-fastembed-imagin>=0.7.5.2,<0.8.0
+fastembed-imagin-studio>=0.7.5.2,<0.8.0
 
 # Vector store (embedded, no server)
 lancedb>=0.17.0,<0.18.0

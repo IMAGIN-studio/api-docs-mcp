@@ -7,9 +7,9 @@ This is a thin **npx wrapper** that finds `uvx` on your system and launches
 the Python MCP server. It solves the common problem of GUI apps (Claude
 Desktop, Cursor, etc.) not finding `uvx` in PATH.
 
-## Dependency note — `fastembed-imagin`
+## Dependency note — `fastembed-imagin-studio`
 
-This package depends on `fastembed-imagin`, a temporary fork of
+This package depends on `fastembed-imagin-studio`, a temporary fork of
 [`fastembed`](https://github.com/qdrant/fastembed) by Qdrant.
 
 **Why:** upstream fastembed 0.7.4 pins `pillow<12.0`, which blocks
@@ -18,11 +18,11 @@ Pillow 12.x security fixes (CVE-2026-25990). The fix is merged on
 
 **What changed:** only the pillow version constraint — relaxed from
 `<12.0` to `<13.0` for Python 3.10+. No logic changes. Source:
-[IMAGIN-studio/fastembed-imagin](https://github.com/IMAGIN-studio/fastembed-imagin).
+[IMAGIN-studio/fastembed-imagin-studio](https://github.com/IMAGIN-studio/fastembed-imagin-studio).
 
 **Revert plan:** once upstream releases fastembed 0.7.5+ with the
 pillow fix, this package will switch back to `fastembed` and
-`fastembed-imagin` will be retired.
+`fastembed-imagin-studio` will be retired.
 
 ## Prerequisites
 

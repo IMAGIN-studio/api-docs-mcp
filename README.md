@@ -6,9 +6,9 @@ Semantic search over [IMAGIN.studio](https://www.imaginstudio.com/)
 Provides one tool — `search_docs` — for any AI coding assistant that supports
 [MCP](https://modelcontextprotocol.io/).
 
-> **Dependency note — `fastembed-imagin`**
+> **Dependency note — `fastembed-imagin-studio`**
 >
-> This package depends on `fastembed-imagin`, a temporary fork of
+> This package depends on `fastembed-imagin-studio`, a temporary fork of
 > [`fastembed`](https://github.com/qdrant/fastembed) by Qdrant.
 >
 > **Why:** upstream fastembed 0.7.4 pins `pillow<12.0`, which blocks
@@ -17,11 +17,11 @@ Provides one tool — `search_docs` — for any AI coding assistant that support
 >
 > **What changed:** only the pillow version constraint — relaxed from
 > `<12.0` to `<13.0` for Python 3.10+. No logic changes. Source:
-> [IMAGIN-studio/fastembed-imagin](https://github.com/IMAGIN-studio/fastembed-imagin).
+> [IMAGIN-studio/fastembed-imagin-studio](https://github.com/IMAGIN-studio/fastembed-imagin-studio).
 >
 > **Revert plan:** once upstream releases fastembed 0.7.5+ with the
 > pillow fix, this package will switch back to `fastembed` and
-> `fastembed-imagin` will be retired.
+> `fastembed-imagin-studio` will be retired.
 
 ## Install
 
