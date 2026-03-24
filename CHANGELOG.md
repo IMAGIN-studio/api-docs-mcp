@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.14] - 2026-03-24
+
+### Added
+- `smithery.yaml` for Smithery MCP registry listing
+
+### Changed
+- Bump GitHub Actions `checkout` to v5 and Node.js to 22 (fixes deprecation warnings)
+
 ## [0.1.13] - 2026-03-24
 
 ### Changed
