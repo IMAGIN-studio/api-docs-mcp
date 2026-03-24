@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.13] - 2026-03-24
+
+### Changed
+- Fixed fastembed disclaimer: PR #599 is merged, not open — replaced with release request issue #606
+- Added pending items to TODO.md (GitBook sync, TestPyPI account, MCP registries)
+
 ## [0.1.12] - 2026-03-24
 
 ### Changed

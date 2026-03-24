@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "imagin-studio-api-docs-mcp",
   "display_name": "IMAGIN.studio Docs",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Semantic search over IMAGIN.studio documentation — CDN, API, integration guides, and more.",
   "author": {
     "name": "IMAGIN.studio",
