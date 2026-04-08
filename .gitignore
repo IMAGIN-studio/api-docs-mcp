@@ -110,6 +110,9 @@ secrets.yml
 *-credentials.json
 service-account*.json
 
+# MCP Registry publisher tokens
+.mcpregistry_*
+
 # GCP
 application_default_credentials.json
 
@@ -122,6 +125,12 @@ application_default_credentials.json
 *.tar.gz
 *.zip
 *.jar
+
+# -----------------------------------------------------------------------------
+# Local-only docs and tracking
+# -----------------------------------------------------------------------------
+PUBLISHING.md
+*.docx
 
 # -----------------------------------------------------------------------------
 # Local development

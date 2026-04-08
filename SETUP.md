@@ -8,28 +8,6 @@ The server provides one tool — `search_docs` — that gives your AI coding
 assistant semantic search over the [IMAGIN.studio](https://www.imaginstudio.com/)
 [documentation](https://docs.imagin.studio/).
 
-> **Dependency note — `fastembed-imagin-studio`**
->
-> This package depends on `fastembed-imagin-studio`, a temporary fork of
-> [`fastembed`](https://github.com/qdrant/fastembed) by Qdrant.
->
-> **Why:** upstream fastembed 0.7.4 pins `pillow<12.0`, which blocks
-> Pillow 12.x security fixes (CVE-2026-25990). The fix is merged on
-> `main` but not yet released.
->
-> **What changed:** only the pillow version constraint — relaxed from
-> `<12.0` to `<13.0` for Python 3.10+. No logic changes. Source:
-> [IMAGIN-studio/fastembed-imagin-studio](https://github.com/IMAGIN-studio/fastembed-imagin-studio).
->
-> **pip-audit:** because `fastembed-imagin-studio` is not tracked by any
-> security advisory database, `pip-audit` will report **no known
-> vulnerabilities** for it (it passes clean). It will not flag it as
-> an unknown or suspicious package.
->
-> **Revert plan:** once upstream releases fastembed 0.7.5+ with the
-> pillow fix, this package will switch back to `fastembed` and
-> `fastembed-imagin-studio` will be retired.
-
 ---
 
 ## Quick start

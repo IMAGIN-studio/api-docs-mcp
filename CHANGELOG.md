@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.19] - 2026-04-08
+
+### Changed
+- Reverted from `fastembed-imagin-studio` fork to upstream `fastembed>=0.8.0` — resolves CVE-2026-25990 (pillow constraint fixed in [qdrant/fastembed 0.8.0](https://github.com/qdrant/fastembed/releases/tag/v0.8.0))
+- Removed fastembed fork disclaimers from PyPI, npm, and setup documentation
+- Fixed npm license field to SPDX-compliant format for registry compatibility
+
+### Added
+- `glama.json` for Glama MCP directory claim
+
+### Chore
+- Gitignore MCP Registry publisher tokens and local publishing docs
+- Removed TODO.md (all tasks completed)
+- Added project logo
+
+## [0.1.18] - 2026-03-24
+
+### Changed
+- Improved GitHub README with quick start config, agent compatibility table, example prompts
+
 ## [0.1.17] - 2026-03-24
 
 ### Fixed

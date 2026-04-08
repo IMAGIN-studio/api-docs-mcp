@@ -1,47 +1,81 @@
 # IMAGIN.studio API Docs MCP Server
 
-Semantic search over [IMAGIN.studio](https://www.imaginstudio.com/)
-[documentation](https://docs.imagin.studio/) — CDN, API, integration guides, and more.
+Give your AI coding assistant instant access to the full [IMAGIN.studio](https://www.imaginstudio.com/) [documentation](https://docs.imagin.studio/) — CDN configuration, API references, integration guides, and more.
 
-Provides one tool — `search_docs` — for any AI coding assistant that supports
-[MCP](https://modelcontextprotocol.io/).
+One tool. One command. Works with every major AI coding assistant.
 
-> **Dependency note — `fastembed-imagin-studio`**
->
-> This package depends on `fastembed-imagin-studio`, a temporary fork of
-> [`fastembed`](https://github.com/qdrant/fastembed) by Qdrant.
->
-> **Why:** upstream fastembed 0.7.4 pins `pillow<12.0`, which blocks
-> Pillow 12.x security fixes (CVE-2026-25990). The fix is merged on
-> `main` but not yet released.
->
-> **What changed:** only the pillow version constraint — relaxed from
-> `<12.0` to `<13.0` for Python 3.10+. No logic changes. Source:
-> [IMAGIN-studio/fastembed-imagin-studio](https://github.com/IMAGIN-studio/fastembed-imagin-studio).
->
-> **Revert plan:** once upstream releases fastembed 0.7.5+ with the
-> pillow fix, this package will switch back to `fastembed` and
-> `fastembed-imagin-studio` will be retired.
+## Quick Start
 
-## Install
+Paste this into your agent's MCP config:
 
-**PyPI (recommended):**
-
-```sh
-uvx imagin-studio-api-docs-mcp
+```json
+{
+  "mcpServers": {
+    "imagin-docs": {
+      "command": "uvx",
+      "args": ["imagin-studio-api-docs-mcp"]
+    }
+  }
+}
 ```
 
-**npm (for GUI apps that can't find uvx):**
+Or just ask your AI assistant:
 
-```sh
-npx -y @imagin.studio/api-docs-mcp
+> Install this MCP server: https://pypi.org/project/imagin-studio-api-docs-mcp/
+
+## How It Works
+
+1. **Install** — `uvx imagin-studio-api-docs-mcp` (no cloning, no venv, no config)
+2. **Index** — On first run, clones the docs and builds a local vector index (~30 sec)
+3. **Search** — Your AI assistant calls `search_docs` to find relevant documentation
+4. **Stay fresh** — The index auto-updates when the upstream docs change
+
+Everything runs locally. No API keys. No external services.
+
+## Supported Agents
+
+| Agent | Config location |
+|-------|----------------|
+| **Claude Code** | `.mcp.json` in project root |
+| **Claude Desktop** | `claude_desktop_config.json` |
+| **Cursor** | Settings > Tools & MCP |
+| **Windsurf** | `~/.codeium/windsurf/mcp_config.json` |
+| **VS Code + Copilot** | `.vscode/mcp.json` |
+| **Cline** | MCP servers panel |
+| **Zed** | `~/.config/zed/settings.json` |
+
+For detailed setup instructions for each agent, see the [full setup guide on PyPI](https://pypi.org/project/imagin-studio-api-docs-mcp/).
+
+## Alternative: npx
+
+If your agent can't find `uvx` (common with GUI apps like Claude Desktop and Cursor):
+
+```json
+{
+  "mcpServers": {
+    "imagin-docs": {
+      "command": "npx",
+      "args": ["-y", "@imagin.studio/api-docs-mcp"]
+    }
+  }
+}
 ```
 
-For step-by-step setup instructions for 7 coding agents (Claude Code, Claude
-Desktop, Cursor, Windsurf, VS Code + Copilot, Cline, Zed), see the full
-setup guide on PyPI:
+## What You Can Ask
 
-**https://pypi.org/project/imagin-studio-api-docs-mcp/**
+Once installed, try prompts like:
+
+- *"Search the IMAGIN docs for CDN cache invalidation"*
+- *"How do I set up a custom domain with IMAGIN?"*
+- *"Find the API endpoint for image transformations"*
+- *"What image formats does IMAGIN.studio support?"*
+
+## Packages
+
+| Registry | Package | Install |
+|----------|---------|---------|
+| **PyPI** | [`imagin-studio-api-docs-mcp`](https://pypi.org/project/imagin-studio-api-docs-mcp/) | `uvx imagin-studio-api-docs-mcp` |
+| **npm** | [`@imagin.studio/api-docs-mcp`](https://www.npmjs.com/package/@imagin.studio/api-docs-mcp) | `npx -y @imagin.studio/api-docs-mcp` |
 
 ## License
 
