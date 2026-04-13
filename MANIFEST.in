@@ -3,6 +3,7 @@
 
 include pyproject.toml
 include LICENSE
+include NOTICE
 include SETUP.md
 
 graft src

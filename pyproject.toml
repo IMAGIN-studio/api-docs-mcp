@@ -16,10 +16,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "imagin-studio-api-docs-mcp"
-version = "0.1.19"
+version = "0.1.20"
 description = "Local MCP server for IMAGIN.studio documentation search"
 requires-python = ">=3.12"
-license = "LicenseRef-Proprietary"
+license = "Apache-2.0"
 authors = [
     {name = "IMAGIN.studio", email = "service@imagin.studio"},
 ]

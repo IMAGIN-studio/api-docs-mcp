@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.20] - 2026-04-13
+
+### Added
+- `Dockerfile` for Glama MCP registry inspection and containerized deployment
+- `.dockerignore` to keep image builds lean
+- `NOTICE` file per Apache 2.0 attribution convention
+
+### Changed
+- **License changed from Proprietary to Apache License 2.0** — enables GitHub license detection, Glama install button, and aligns with MCP ecosystem norms
+- Added `License :: OSI Approved :: Apache Software License` classifier in pyproject.toml
+- Release pipeline now creates git tags and GitHub releases on prod deploys
+
 ## [0.1.19] - 2026-04-08
 
 ### Changed

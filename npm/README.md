@@ -50,4 +50,4 @@ builds a local vector index (~20-30 seconds).
 
 ## License
 
-Proprietary — see [LICENSE](https://github.com/IMAGIN-studio/api-docs-mcp/blob/main/LICENSE).
+Apache License 2.0 — see [LICENSE](https://github.com/IMAGIN-studio/api-docs-mcp/blob/main/LICENSE).
