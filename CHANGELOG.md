@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.21] - 2026-04-13
+
+### Added
+- Docker image published to `ghcr.io/imagin-studio/api-docs-mcp` on each release — populates GitHub Packages sidebar and enables `docker pull` for containerized deployments
+- OCI image labels (source, description, license, vendor, url, documentation) linking the image to the GitHub repository
+
 ## [0.1.20] - 2026-04-13
 
 ### Added
