@@ -33,6 +33,9 @@ jobs:
   publish-npm:
     name: Publish to npm
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v5
 
@@ -43,9 +46,7 @@ jobs:
 
       - name: Publish to npm
         working-directory: npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public || echo "Version may already exist"
+        run: npm publish --access public --provenance || echo "Version may already exist"
 
   publish-ghcr:
     name: Publish Docker image to ghcr.io

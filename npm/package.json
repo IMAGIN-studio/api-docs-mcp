@@ -1,6 +1,6 @@
 {
   "name": "@imagin.studio/api-docs-mcp",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "mcpName": "io.github.IMAGINstudio/api-docs-mcp",
   "description": "IMAGIN.studio documentation search — MCP server (npx wrapper)",
   "bin": {

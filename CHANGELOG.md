@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- DTAP promotion guard in Bitbucket Pipelines — blocks deploys/publishes when a branch HEAD does not contain its expected upstream commit (enforces the `main → dev → test → preprod → prod` sequence). Borrowed from `imagin-prospect-demo-platform`.
+
+### Removed
+- Dead `publish-pypi` and `publish-npm` step definitions from `bitbucket-pipelines.yml` — never referenced by any branch pipeline. Both PyPI and npm publishing happen through GitHub Actions (OIDC-based) after `publish-github` pushes the release commit. The Bitbucket pipeline variables `PYPI_TOKEN` and `NPM_TOKEN` are no longer used and can be removed from the repo settings.
+
+## [0.1.22] - 2026-05-26
+
+### Security
+- npm publishing migrated to Trusted Publishing (OIDC) — eliminates the long-lived `NPM_TOKEN` secret and adds package provenance attestations, matching the existing PyPI flow
+
 ## [0.1.21] - 2026-04-13
 
 ### Added
