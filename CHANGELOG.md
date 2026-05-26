@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Dead `publish-pypi` and `publish-npm` step definitions from `bitbucket-pipelines.yml` — never referenced by any branch pipeline. Both PyPI and npm publishing happen through GitHub Actions (OIDC-based) after `publish-github` pushes the release commit. The Bitbucket pipeline variables `PYPI_TOKEN` and `NPM_TOKEN` are no longer used and can be removed from the repo settings.
 
+### Fixed
+- npm publish GitHub Actions step now upgrades npm to the latest version before publishing — required for OIDC Trusted Publishing support (npm ≥ 11.5.1). Node 22's bundled npm 10.x cannot auto-detect the OIDC token, which would silently fail the publish.
+
 ## [0.1.22] - 2026-05-26
 
 ### Security
