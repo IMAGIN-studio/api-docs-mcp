@@ -36,6 +36,12 @@ SUPPORTED_EXTENSIONS = {".md", ".mdx"}
 MAX_CHUNK_CHARS = 8192
 MIN_CHUNK_CHARS = 200
 
+# OpenAPI spec source (committed inside the docs repo; indexed alongside markdown).
+# The spec rides the existing git sync, so a committed change re-indexes automatically.
+OPENAPI_ENABLED: bool = os.getenv("IMAGIN_DOCS_OPENAPI", "1").lower() in ("1", "true", "yes")
+OPENAPI_SPEC_RELPATH = ".gitbook/assets/openapi (1).yaml"  # relative to DOCS_DIR
+OPENAPI_DOCS_URL = "https://docs.imagin.studio"  # per-endpoint result URL; "" to omit
+
 # Search settings
 SEARCH_TOP_K = 5
 SEARCH_TOP_K_MAX = 20

@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- CI: the `publish-github` release step now authenticates to GitHub with a short-lived (~9 min) GitHub App installation token minted in-pipeline, instead of a long-lived `GITHUB_TOKEN` PAT. Requires repo variables `GH_APP_ID`, `GH_APP_INSTALLATION_ID`, and secured `GH_APP_PRIVATE_KEY_B64` (base64 of the App's private key).
+
+### Security
+- Dev toolchain: bumped `pytest` (7.x → 9.0.3+, with `pytest-cov` → 7.x and `pytest-asyncio` → 1.4.x) and switched `gitlint` → `gitlint-core` with floor pins `click>=8.3.3` / `sh>=2.2.4`, clearing 3 advisories (PYSEC-2026-1845, PYSEC-2026-2132, CVE-2026-54552) that failed the pre-publish `pip-audit` gate. Dev/CI-only — no runtime dependency or shipped-package change.
+
+## [0.1.23] - 2026-07-21
+
 ### Added
+- Index the IMAGIN CDN image-API spec (`getImage`, `getCarListing`, `getPaints`, `getPaintswatches`, `getImagecachebundle`) as one searchable chunk per endpoint, alongside the existing markdown docs, so `search_docs` can answer API/parameter questions. Sourced from the committed `openapi (1).yaml` in the docs repo — local `$ref` parameters/schemas are resolved into each chunk, and the spec re-indexes automatically via the existing git sync. Disable with `IMAGIN_DOCS_OPENAPI=0`.
 - DTAP promotion guard in Bitbucket Pipelines — blocks deploys/publishes when a branch HEAD does not contain its expected upstream commit (enforces the `main → dev → test → preprod → prod` sequence). Borrowed from `imagin-prospect-demo-platform`.
 
 ### Removed
