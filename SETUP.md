@@ -166,7 +166,7 @@ The one exception is **Claude Desktop App**, which requires the full path upfron
 If you have Node.js 18+ installed, you can use `npx` instead of `uvx`:
 
 ```sh
-npx -y imagin-studio-api-docs-mcp
+npx -y @imagin.studio/api-docs-mcp
 ```
 
 This downloads the npm wrapper and starts the MCP server. On first run it
@@ -182,12 +182,12 @@ common install locations (`~/.local/bin`, Homebrew, cargo) automatically,
 so you don't need to configure full paths.
 
 In agent config snippets, replace `"uvx"` with `"npx"` and use
-`["-y", "imagin-studio-api-docs-mcp"]` as args:
+`["-y", "@imagin.studio/api-docs-mcp"]` as args:
 
 ```json
 "imagin-docs": {
   "command": "npx",
-  "args": ["-y", "imagin-studio-api-docs-mcp"]
+  "args": ["-y", "@imagin.studio/api-docs-mcp"]
 }
 ```
 

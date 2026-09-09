@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Thin wrapper that finds uvx and spawns the imagin-studio-api-docs-mcp Python server.
-// Used by: Claude Desktop .mcpb extension, npx imagin-studio-api-docs-mcp.
+// Used by: Claude Desktop .mcpb extension, npx -y @imagin.studio/api-docs-mcp.
 //
 // Why Node.js? GUI apps (Claude Desktop, Cursor, etc.) don't inherit shell
 // PATH, so bare "uvx" fails with ENOENT. This script probes common install

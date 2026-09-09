@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.24] - 2026-09-07
+
+### Fixed
+- The npx install path in the PyPI setup guide (`SETUP.md`) pointed at `imagin-studio-api-docs-mcp`, an unscoped npm name that was never published — the wrapper has been `@imagin.studio/api-docs-mcp` since 0.1.12. The bulk rename in 0.1.12 (`imagin-docs-mcp` → `imagin-studio-api-docs-mcp`) rewrote the npx lines along with the PyPI ones, so anyone following the guide's `npx -y …` command hit a 404 (or, worse, whoever registers that unclaimed name). Also fixed the stale `npx imagin-studio-api-docs-mcp` header comments in `npm/bin/imagin-studio-api-docs-mcp.js` and `mcpb/server/index.js`.
+
 ### Changed
+- Synced project scaffolding with the current `imagin-sre` CI/CD templates (`cicd-base` + `cicd-python`): the Makefile gains the template's `install` / `install-dev` targets (both were already documented in AGENTS.md but did not exist), `setup` / `setup-ci` are composed from them, `clean` no longer deletes the venv (that moved to the new `clean-all`), the coverage threshold falls back to 80 when `project.yaml` is absent, and `make hooks` shows up in `make help`. Also picked up the template's `commit` skill wording, the `---` document marker in `lefthook.yml`, the shared `.idea/misc.xml`, and `project.yaml` now tracks the release version. Ruff config intentionally stays in `pyproject.toml` (identical rules to the template's `.config/ruff.toml`, plus this repo's per-file ignores).
 - CI: the `publish-github` release step now authenticates to GitHub with a short-lived (~9 min) GitHub App installation token minted in-pipeline, instead of a long-lived `GITHUB_TOKEN` PAT. Requires repo variables `GH_APP_ID`, `GH_APP_INSTALLATION_ID`, and secured `GH_APP_PRIVATE_KEY_B64` (base64 of the App's private key).
 
 ### Security
