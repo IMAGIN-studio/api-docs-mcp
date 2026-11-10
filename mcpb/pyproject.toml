@@ -1,8 +1,8 @@
 [project]
 name = "imagin-studio-api-docs-mcp-extension"
-version = "0.1.27"
+version = "0.1.28"
 description = "IMAGIN.studio API Docs MCP Server: Claude Desktop extension"
 requires-python = ">=3.12"
 dependencies = [
-    "imagin-studio-api-docs-mcp>=0.1.27",
+    "imagin-studio-api-docs-mcp>=0.1.28",
 ]

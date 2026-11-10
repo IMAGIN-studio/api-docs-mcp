@@ -1,4 +1,4 @@
-<!-- mcp-name: io.github.IMAGINstudio/api-docs-mcp -->
+<!-- mcp-name: io.github.IMAGIN-studio/api-docs-mcp -->
 # IMAGIN.studio API Docs MCP Server - Setup Guide
 
 Give your AI coding assistant direct access to the full

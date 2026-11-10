@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.28] - 2026-11-10
+
+### Added
+- The release workflow now publishes `server.json` to the official MCP Registry (new `publish-mcp-registry` job, after the PyPI and npm jobs). It authenticates with GitHub OIDC, so no secret is involved, and runs `mcp-publisher` v1.8.5, pinned by version and SHA-256. Until now the registry entry was published once, by hand, and stayed at 0.1.17 with the old description.
+
+### Changed
+- MCP Registry name is now `io.github.IMAGIN-studio/api-docs-mcp` (was `io.github.IMAGINstudio/api-docs-mcp`). The old name belongs to a separate GitHub user account (`IMAGINstudio`), which release-workflow OIDC cannot publish for; OIDC grants the namespace of the repository owner, the `IMAGIN-studio` organization. Updated in `server.json`, the npm `mcpName` and the PyPI `mcp-name` marker in `SETUP.md`. The old 0.1.17 entry stays in the registry until someone logs in to `mcp-publisher` as the `IMAGINstudio` user once and marks it deprecated with `mcp-publisher status`.
+
 ## [0.1.27] - 2026-11-10
 
 ### Changed

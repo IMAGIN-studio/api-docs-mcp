@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "imagin-studio-api-docs-mcp",
   "display_name": "IMAGIN.studio API Docs",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "Give your AI coding assistant direct access to the IMAGIN.studio vehicle imagery API docs.",
   "author": {
     "name": "IMAGIN.studio",
