@@ -1,12 +1,14 @@
 <!-- mcp-name: io.github.IMAGINstudio/api-docs-mcp -->
 # IMAGIN.studio API Docs MCP Server - Setup Guide
 
-Works on **Windows**, **macOS**, and **Linux**.
-No cloning, no venv — just install `uv` and paste a config snippet.
+Give your AI coding assistant direct access to the full
+[IMAGIN.studio](https://www.imaginstudio.com/) [documentation](https://docs.imagin.studio/),
+from CDN data points and getImage parameters to paint matching, 360° spinners and
+deployment guides, so you can build faster without leaving your editor.
 
-The server provides one tool — `search_docs` — that gives your AI coding
-assistant semantic search over the [IMAGIN.studio](https://www.imaginstudio.com/)
-[documentation](https://docs.imagin.studio/).
+The server provides one tool, `search_docs`, which your assistant calls to look up
+the docs. Works on **Windows**, **macOS**, and **Linux**. No cloning, no venv: just
+install `uv` and paste a config snippet.
 
 ---
 

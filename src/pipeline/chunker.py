@@ -69,8 +69,9 @@ def chunk_document(
         if not content.strip():
             continue
 
-        # Split oversized chunks
-        for part in _split_oversized(content, max_chars):
+        # Split oversized chunks; later parts repeat the heading for context
+        continuation = f"# {heading_text} (continued)" if heading_text else ""
+        for part in split_with_continuation(content, max_chars, continuation):
             chunk_id = _make_chunk_id(document.path, part)
             chunks.append(
                 Chunk(
@@ -122,6 +123,30 @@ def _build_chunk_content(heading: str, body: str) -> str:
     if heading:
         return f"# {heading}\n\n{body}" if body else f"# {heading}"
     return body
+
+
+def split_with_continuation(text: str, max_chars: int, continuation: str = "") -> list[str]:
+    """Split *text* into parts of at most *max_chars*, labelling later parts.
+
+    Every part after the first starts with *continuation* (e.g. the section
+    heading), so a part found on its own still says what it belongs to. The
+    label's length is reserved up front so no part exceeds *max_chars*.
+
+    Args:
+        text: The text to split.
+        max_chars: Hard cap per part, including the continuation label.
+        continuation: Label prepended to every part after the first.
+
+    Returns:
+        The parts, in order. A text that fits is returned unchanged as one part.
+    """
+    if len(text) <= max_chars:
+        return [text]
+
+    prefix = f"{continuation}\n\n" if continuation else ""
+    budget = max(max_chars - len(prefix), max_chars // 2)
+    parts = _split_oversized(text, budget)
+    return [parts[0], *(prefix + part for part in parts[1:])]
 
 
 def _split_oversized(text: str, max_chars: int) -> list[str]:

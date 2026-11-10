@@ -5,9 +5,12 @@ repository (``.gitbook/assets/openapi (1).yaml``). Because that file rides the
 existing git sync, a committed spec change is re-indexed automatically — there is
 no HTTP fetch and no separate freshness mechanism.
 
-Each operation (method + path) becomes a single ``Chunk``. The text is compact and
-high-signal-first (method/path/summary/description/required params before optional
-ones) because the embedding model truncates long inputs. Local ``$ref`` pointers —
+Each operation (method + path) becomes one ``Chunk``, or several when its text is
+longer than ``max_chars``. The embedding model only reads the first 512 tokens of
+an input, so a long endpoint is split rather than truncated: every part after the
+first starts with ``METHOD /path (continued)`` and keeps the same document path.
+The text is high-signal-first (method/path/summary/description/required params
+before optional ones). Local ``$ref`` pointers —
 both ``components.parameters`` and ``components.schemas`` — are resolved so each
 chunk carries real parameter names and descriptions rather than opaque refs.
 """
@@ -22,6 +25,7 @@ from typing import Any
 import yaml
 
 from src.config import DOCS_DIR, MAX_CHUNK_CHARS, OPENAPI_DOCS_URL, OPENAPI_SPEC_RELPATH
+from src.pipeline.chunker import split_with_continuation
 from src.pipeline.models import Chunk
 
 
@@ -29,7 +33,6 @@ logger = logging.getLogger(__name__)
 
 _HTTP_METHODS = ("get", "put", "post", "patch", "delete", "head", "options", "trace")
 _MAX_REF_DEPTH = 6
-_TRUNCATION_MARKER = "\n\n[...truncated]"
 
 
 def find_spec_file(docs_dir: Path = DOCS_DIR) -> Path | None:
@@ -99,8 +102,8 @@ def parse_openapi_spec(
         for method, operation in item.items():
             if method.lower() not in _HTTP_METHODS or not isinstance(operation, dict):
                 continue
-            chunks.append(
-                _build_operation_chunk(
+            chunks.extend(
+                _build_operation_chunks(
                     method, path, operation, path_params, spec, server_url, docs_url, max_chars
                 )
             )
@@ -127,7 +130,7 @@ def _first_server_url(spec: dict[str, Any]) -> str:
     return ""
 
 
-def _build_operation_chunk(
+def _build_operation_chunks(
     method: str,
     path: str,
     operation: dict[str, Any],
@@ -136,7 +139,7 @@ def _build_operation_chunk(
     server_url: str,
     docs_url: str,
     max_chars: int,
-) -> Chunk:
+) -> list[Chunk]:
     method_upper = method.upper()
     document_path = f"openapi:{method_upper} {path}"
 
@@ -169,17 +172,24 @@ def _build_operation_chunk(
         lines += ["", *responses]
 
     content = "\n".join(lines).strip()
-    if len(content) > max_chars:
-        logger.warning("OpenAPI chunk for %s exceeds %d chars; truncating", document_path, max_chars)
-        content = content[: max_chars - len(_TRUNCATION_MARKER)].rstrip() + _TRUNCATION_MARKER
+    parts = split_with_continuation(content, max_chars, f"{method_upper} {path} (continued)")
 
-    return Chunk(
-        chunk_id=hashlib.sha256(document_path.encode()).hexdigest()[:16],
-        document_path=document_path,
-        heading_hierarchy=[tag],
-        content=content,
-        url=docs_url,
-    )
+    return [
+        Chunk(
+            # Part 0 keeps the historical id; later parts get an index suffix.
+            chunk_id=_operation_chunk_id(document_path if i == 0 else f"{document_path}#{i}"),
+            document_path=document_path,
+            heading_hierarchy=[tag],
+            content=part,
+            url=docs_url,
+        )
+        for i, part in enumerate(parts)
+    ]
+
+
+def _operation_chunk_id(key: str) -> str:
+    """Deterministic chunk id for an operation (or one of its parts)."""
+    return hashlib.sha256(key.encode()).hexdigest()[:16]
 
 
 def _collect_parameters(

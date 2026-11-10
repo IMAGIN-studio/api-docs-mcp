@@ -29,11 +29,13 @@ METADATA_FILE = DATA_DIR / "metadata.json"
 
 # Embedding model
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+# BGE's retrieval instruction for queries (documents are embedded without it).
+EMBEDDING_QUERY_INSTRUCTION = "Represent this sentence for searching relevant passages: "
 LANCEDB_TABLE_NAME = "docs"
 
 # Pipeline settings
 SUPPORTED_EXTENSIONS = {".md", ".mdx"}
-MAX_CHUNK_CHARS = 8192
+MAX_CHUNK_CHARS = 2000  # ~512 tokens: the embedding model ignores input past that
 MIN_CHUNK_CHARS = 200
 
 # OpenAPI spec source (committed inside the docs repo; indexed alongside markdown).
@@ -46,6 +48,21 @@ OPENAPI_DOCS_URL = "https://docs.imagin.studio"  # per-endpoint result URL; "" t
 SEARCH_TOP_K = 5
 SEARCH_TOP_K_MAX = 20
 CHARACTER_LIMIT = SEARCH_TOP_K_MAX * (MAX_CHUNK_CHARS + 200)
+
+# Hybrid search (vector + BM25, merged by weighted reciprocal rank fusion).
+# Tuned with eval/run_eval.py on 62 questions: deeper candidate pools (20, 50)
+# traded top-1 hits for top-5 hits and lowered MRR; a keyword weight of 0.5 or
+# 2 did not beat equal weights. Re-run the sweep before changing these.
+HYBRID_CANDIDATES = 5  # chunks fetched from each ranking before fusion (at least top_k)
+RRF_K = 60  # RRF damping constant (60 = original RRF paper)
+HYBRID_KEYWORD_WEIGHT = 1.0  # keyword ranking weight; the vector ranking has weight 1
+
+# Markdown files left out of the index, relative to the docs root.
+# The MCP manual page describes this server and lists example questions, so it
+# matched many unrelated queries; leaving it out gained 1 top-1 and 1 top-5 hit.
+INDEX_EXCLUDE_PATHS: frozenset[str] = frozenset(
+    {"api-integration/manuals/mcp-api-documentation.md"}
+)
 
 
 # --- Telemetry (opt-in) ---

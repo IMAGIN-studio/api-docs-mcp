@@ -1,8 +1,8 @@
 {
   "name": "@imagin.studio/api-docs-mcp",
-  "version": "0.1.24",
+  "version": "0.1.27",
   "mcpName": "io.github.IMAGINstudio/api-docs-mcp",
-  "description": "IMAGIN.studio documentation search — MCP server (npx wrapper)",
+  "description": "Give your AI coding assistant direct access to the IMAGIN.studio vehicle imagery API docs.",
   "bin": {
     "imagin-studio-api-docs-mcp": "bin/imagin-studio-api-docs-mcp.js"
   },
@@ -16,7 +16,7 @@
   "author": {
     "name": "IMAGIN.studio",
     "email": "service@imagin.studio",
-    "url": "https://imagin.studio"
+    "url": "https://www.imaginstudio.com/"
   },
   "repository": {
     "type": "git",

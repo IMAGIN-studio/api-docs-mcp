@@ -1,0 +1,300 @@
+{
+  "questions": [
+    {
+      "id": "id-01",
+      "category": "identifier",
+      "query": "x-imaginstudio-performed-matches header",
+      "expected": [
+        "api-integration/manuals/cdn-return-header-behavior.md"
+      ],
+      "why": "Code sample comments: JSON object of parameters and values substituted while near matching"
+    },
+    {
+      "id": "id-02",
+      "category": "identifier",
+      "query": "What does x-imaginstudio-request-resolved=false mean on a getImage response?",
+      "expected": [
+        "api-integration/manuals/cdn-return-header-behavior.md"
+      ],
+      "why": "Section 2 of header attributes: CDN could not match the request with a vehicle"
+    },
+    {
+      "id": "id-03",
+      "category": "identifier",
+      "query": "randomPaint=true",
+      "expected": [
+        "api-integration/manuals/cdn-data-points.md"
+      ],
+      "why": "DATA POINTS table row randomPaint: assigns a random colour to the vehicle"
+    },
+    {
+      "id": "id-04",
+      "category": "identifier",
+      "query": "hideshadow parameter default value",
+      "expected": [
+        "api-integration/manuals/cdn-data-points.md"
+      ],
+      "why": "DATA POINTS table row hideshadow: ground shadow toggle, defaults to false"
+    },
+    {
+      "id": "id-05",
+      "category": "identifier",
+      "query": "backgroundColor opacity fourth value R,G,B,O",
+      "expected": [
+        "api-integration/manuals/cdn-data-points.md"
+      ],
+      "why": "DATA POINTS table row backgroundColor: 4th value is opacity 0-255, needs webp/png"
+    },
+    {
+      "id": "id-06",
+      "category": "identifier",
+      "query": "rimDescription param, when is it used instead of rimId?",
+      "expected": [
+        "openapi:GET /getImage"
+      ],
+      "why": "getImage parameter rimDescription: used to identify the rim when rimId cannot be resolved (premium/enterprise)"
+    },
+    {
+      "id": "id-07",
+      "category": "identifier",
+      "query": "licenseBundleSize channelName campaignId",
+      "expected": [
+        "openapi:GET /getImagecachebundle"
+      ],
+      "why": "getImagecachebundle parameters: expected views after caching, channel, advertising/page id"
+    },
+    {
+      "id": "id-08",
+      "category": "identifier",
+      "query": "getImage steering parameter right hand drive not available",
+      "expected": [
+        "openapi:GET /getImage",
+        "openapi:GET /getCarListing"
+      ],
+      "why": "getImage parameter steering: left hand drive shown when right hand drive unavailable"
+    },
+    {
+      "id": "id-09",
+      "category": "identifier",
+      "query": "capVehicleType and capId required fields",
+      "expected": [
+        "guides/getting-images/i.-core-data-and-setup/cap-hpi-field-mapping.md"
+      ],
+      "why": "Core Request Structure table: capVehicleType (car/lcv) and capId replace make/modelFamily"
+    },
+    {
+      "id": "id-10",
+      "category": "identifier",
+      "query": "wideScreenPosition left right none",
+      "expected": [
+        "guides/getting-images/ii.-image-customization-and-styling/selecting-our-lifestyle-images.md"
+      ],
+      "why": "Lifestyle parameters table and section 4: horizontal vehicle offset, replaces overlayArea"
+    },
+    {
+      "id": "id-11",
+      "category": "identifier",
+      "query": "cdn-01 to cdn-09 numbered hosts, why use them",
+      "expected": [
+        "api-integration/manuals/getting-started.md"
+      ],
+      "why": "CDN-INSTANCE section: numbered instances bypass Chrome's max simultaneous connections"
+    },
+    {
+      "id": "id-12",
+      "category": "identifier",
+      "query": "getPaints paintIds filter with target=car, how many codes can I pass",
+      "expected": [
+        "api-integration/manuals/paint-data-and-api-behavior.md"
+      ],
+      "why": "getPaints API ENDPOINT section: optional paintIds filter, up to 10 comma-separated ids"
+    },
+    {
+      "id": "how-01",
+      "category": "howto",
+      "query": "show a 360 spinner with a range slider",
+      "expected": [
+        "api-integration/manuals/360-example.md"
+      ],
+      "why": "Full HTML/JS/CSS slider example cycling angles 200-231"
+    },
+    {
+      "id": "how-02",
+      "category": "howto",
+      "query": "How can I read the CDN response headers from JavaScript to find out which values were substituted?",
+      "expected": [
+        "api-integration/manuals/cdn-return-header-behavior.md"
+      ],
+      "why": "ACCESS HEADERS WITH CODE: getImageHeaders HEAD request helper and readResponseHeader"
+    },
+    {
+      "id": "how-03",
+      "category": "howto",
+      "query": "set Referer header on image requests in a Flutter app",
+      "expected": [
+        "guides/getting-images/iii.-deployment-and-integration-guides/embedding-in-your-mobile-app.md"
+      ],
+      "why": "Section 3 Flutter: http.get with headers {'Referer': ...}"
+    },
+    {
+      "id": "how-04",
+      "category": "howto",
+      "query": "car images look broken in Outlook and Gmail newsletters, how do I fix that",
+      "expected": [
+        "guides/getting-images/iii.-deployment-and-integration-guides/embedding-in-your-e-mail-campaigns.md"
+      ],
+      "why": "Append &filetype=jpg for broad e-mail client compatibility"
+    },
+    {
+      "id": "how-05",
+      "category": "howto",
+      "query": "How do I authenticate server-side calls with my customer id and secret?",
+      "expected": [
+        "api-integration/manuals/connecting-to-backend-cdn-api-methods.md",
+        "api-integration/manuals/creating-a-signedurl.md"
+      ],
+      "why": "Both give the steps: Authorization: Basic base64(customerId:customerSecret), worked example"
+    },
+    {
+      "id": "how-06",
+      "category": "howto",
+      "query": "stop other sites from copying my customer key out of the image URLs",
+      "expected": [
+        "api-integration/manuals/creating-a-signedurl.md"
+      ],
+      "why": "Intro + Implementation Guide: signed URLs mask parameters; call getSignedUrl and append result to cdn.imagin.studio/"
+    },
+    {
+      "id": "how-07",
+      "category": "howto",
+      "query": "populate a colour picker dropdown with all valid paint codes for BMW",
+      "expected": [
+        "guides/getting-images/iii.-deployment-and-integration-guides-1/setting-up-color-swatches.md",
+        "api-integration/manuals/paint-data-and-api-behavior.md"
+      ],
+      "why": "getPaints page endpoint (target=make&make=bmw) and the getPaints API section of the paint manual"
+    },
+    {
+      "id": "how-08",
+      "category": "howto",
+      "query": "render colour tiles with hex values for a list of paint codes",
+      "expected": [
+        "guides/getting-images/iii.-deployment-and-integration-guides-1/setting-up-color-swatches-1.md",
+        "api-integration/manuals/paint-data-and-api-behavior.md"
+      ],
+      "why": "getPaintSwatches reference (make, paints, response fields) and the getPaintSwatches API section of the paint manual"
+    },
+    {
+      "id": "how-09",
+      "category": "howto",
+      "query": "build cascading make -> model dropdowns from the cars you have available",
+      "expected": [
+        "guides/getting-images/iii.-deployment-and-integration-guides-1/getcarlisting-api-behavior.md"
+      ],
+      "why": "Filtering Logic table and JS helper: getCarListing returns the next layer per parameter supplied"
+    },
+    {
+      "id": "how-10",
+      "category": "howto",
+      "query": "put the car in front of an Italian street backdrop in ultra-wide 32:9 format",
+      "expected": [
+        "guides/getting-images/ii.-image-customization-and-styling/selecting-our-lifestyle-images.md"
+      ],
+      "why": "surrounding=sur33 plus aspectRatio=32:9, example request URL"
+    },
+    {
+      "id": "how-11",
+      "category": "howto",
+      "query": "request a Toyota Yaris in a specific factory paint colour",
+      "expected": [
+        "guides/getting-images/ii.-image-customization-and-styling/selecting-a-car-color.md"
+      ],
+      "why": "Request Example: paintId=6w9&paintDescription=radiant-green on a Yaris"
+    },
+    {
+      "id": "how-12",
+      "category": "howto",
+      "query": "simplest possible getImage URL, which params are mandatory",
+      "expected": [
+        "guides/getting-images/i.-core-data-and-setup/selecting-a-car.md"
+      ],
+      "why": "Section 1 Required Parameters (customer, make, modelFamily) and Minimum Request Example"
+    },
+    {
+      "id": "con-01",
+      "category": "concept",
+      "query": "Can I mirror the car pictures to my own S3 bucket instead of hotlinking every time?",
+      "expected": [
+        "api-integration/manuals/getting-started.md",
+        "guides/getting-images/README.md"
+      ],
+      "why": "ALWAYS STRAIGHT FROM OUR CDN: no download or server-side caching unless agreed, only browser caching"
+    },
+    {
+      "id": "con-02",
+      "category": "concept",
+      "query": "I asked for red but the car comes back silver-grey. Will it ever turn red and how long does that take?",
+      "expected": [
+        "api-integration/manuals/getimage-api-behavior-and-timing.md"
+      ],
+      "why": "TIMING table, unproduced paint rows: light grey metallic stand-in, real image in 1 to 48 hours"
+    },
+    {
+      "id": "con-03",
+      "category": "concept",
+      "query": "why is the first load slow when I switch to a new image size",
+      "expected": [
+        "api-integration/manuals/getimage-api-behavior-and-timing.md"
+      ],
+      "why": "TIMING table row for new resolution/width/filetype: tailoring, V3 under 3 seconds, waitShape if queued"
+    },
+    {
+      "id": "con-04",
+      "category": "concept",
+      "query": "our native app re-downloads every car picture on each screen; how long are we allowed to keep them on the device",
+      "expected": [
+        "guides/getting-images/iii.-deployment-and-integration-guides/embedding-in-your-mobile-app.md"
+      ],
+      "why": "TTL in a Mobile app: honour header TTL (max 7 days) for local caching, for updates and licence compliance"
+    },
+    {
+      "id": "con-05",
+      "category": "concept",
+      "query": "what happens when I send a colour code your system has never seen",
+      "expected": [
+        "faq/paints.md",
+        "api-integration/manuals/getimage-api-behavior-and-timing.md"
+      ],
+      "why": "Paints FAQ second row (self-learning match + QA, few days); timing page PAINT DEFINITION and unproduced paint row"
+    },
+    {
+      "id": "con-06",
+      "category": "concept",
+      "query": "If my data says vw instead of volkswagen, do I still get a picture and does it correct itself later?",
+      "expected": [
+        "guides/getting-images/i.-core-data-and-setup/selecting-a-car.md",
+        "faq/incorrect-image.md"
+      ],
+      "why": "Handling Data Mismatches (closest match, auto update at same URL); Incorrect image FAQ (initial lookalike then auto update)"
+    },
+    {
+      "id": "con-07",
+      "category": "concept",
+      "query": "tiny city cars appear as large as vans in my listing grid",
+      "expected": [
+        "guides/getting-images/ii.-image-customization-and-styling/zoomtype.md",
+        "openapi:GET /getImage"
+      ],
+      "why": "zoomType page relative vs fullscreen; spec zoomType parameter: fullscreen shows a small car as large as an LCV, relative keeps true size"
+    },
+    {
+      "id": "con-08",
+      "category": "concept",
+      "query": "if you fix a wrong picture on your side, do my secured links stop working or need to be generated again?",
+      "expected": [
+        "api-integration/manuals/creating-a-signedurl.md"
+      ],
+      "why": "How Library Updates and Corrections Propagate: signed URL unchanged, corrected image appears after cache TTL"
+    }
+  ]
+}

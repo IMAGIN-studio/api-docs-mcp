@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.27] - 2026-11-10
+
+### Changed
+- All dependencies updated to the newest release that is at least two weeks old (cutoff 27 Oct 2026). Runtime: fastmcp 3 to 4.1.4, lancedb 0.17 to 0.40, fastembed 0.8 to 0.9.1 (which allows Pillow 13), plus raised floors for pydantic, python-dotenv, pyyaml and python-frontmatter. Dev: ruff 0.1 to 0.17, mypy 1 to 2.4, twine 6 to 7, pytest 9.1.1 and the rest of `requirements-dev.txt`. No code changes were needed for fastmcp 4; lint and type checks pass unchanged.
+- New `requirements.lock`: exact pins for all 146 runtime and dev packages (including the setuptools build backend), transitive ones included, every one at least 14 days old. `make install`, `make install-dev` (and so CI), `make build-package`, the release workflow's build and the Docker image install through it as constraints (`PIP_CONSTRAINT` also reaches pip's isolated build environments). `make lock` regenerates it with a rolling cutoff (`LOCK_MIN_AGE_DAYS`, default 14). Users installing with `uvx` still resolve from the version ranges in `pyproject.toml`.
+- lancedb 0.40: replaced the deprecated `table_names()` and `create_fts_index()` with `list_tables()` and `create_index(config=FTS(...))`. The keyword index now removes stop words: lancedb's new BM25 let filler words in sentence-style questions outrank the words that matter. On the 62-question eval this gives hit@1 0.69, hit@5 0.87 and MRR 0.77 (0.1.26: 0.66, 0.85, 0.74); identifier questions are unchanged.
+- CI and release tooling pinned to releases at least two weeks old: GitHub Actions by commit SHA (checkout v7.0.1, setup-python v7.1.0, setup-node v7.1.0, pypi-publish v1.14.3, Docker login v4.7.0, setup-buildx v4.4.1, build-push v7.4.0), npm 12.2.1 instead of `npm@latest`, `build` 1.6.1, gitleaks 8.30.1, taplo 0.10.0, and the `python:3.12.15-slim-trixie`, `alpine:3.24.3` and `alpine/git:2.52.0` images by digest.
+- Docker image is now built from the release commit instead of `pip install imagin-studio-api-docs-mcp` from PyPI. The release workflow publishes to PyPI and builds the image in parallel, so the image could contain the previous version under the new tag (and with the lock constraints the build would fail outright). Its dependencies and build backend are pinned through `requirements.lock`, and its description label uses the agreed one-liner.
+
+### Security
+- Clears the 94 advisories `pip-audit` reported against the previous dependency set (including fastmcp, mcp, cryptography, urllib3, authlib, pyjwt and Pillow), which would have failed the preprod and prod release gate.
+
+## [0.1.26] - 2026-11-10
+
+### Changed
+- One consistent set of public texts, agreed with marketing. Name "IMAGIN.studio API Docs MCP Server" (short form "IMAGIN.studio API Docs"); one-liner "Give your AI coding assistant direct access to the IMAGIN.studio vehicle imagery API docs." in `server.json`, `pyproject.toml`, `npm/package.json` and `mcpb/manifest.json`; company link `https://www.imaginstudio.com/` everywhere (`imagin.studio` redirects there). The Claude Desktop extension is now called "IMAGIN.studio API Docs" instead of "IMAGIN.studio Docs".
+- README and the PyPI page (`SETUP.md`) open with the docs.imagin.studio pitch, and the README's example prompts are the IMAGIN-specific ones from the docs site. Jargon ("semantic search", "RAG", "npx wrapper") is gone from the one-liners. Agent-facing texts (server instructions, `search_docs` description) are unchanged.
+
+## [0.1.25] - 2026-11-10
+
+### Changed
+- `search_docs` now runs a hybrid search: the existing vector search (by meaning) plus a BM25 full-text index (by exact words), merged with reciprocal rank fusion (RRF, implemented in `fuse_rankings`; candidate depth, RRF k and keyword weight are settings in `config.py`, tuned with the eval below). Exact identifiers such as `safeMode` or `x-imaginstudio-performed-matches` are now found even when the vector ranking misses them. The full-text index uses LanceDB's native FTS, so there is no new dependency; if it is missing or fails, search falls back to vector-only.
+- Chunks are now at most 2,000 characters (was 8,192). The embedding model only reads the first 512 tokens of an input, so in the 18 longest chunks (including the getImage reference and CDN Data Points) everything past roughly 2,000 characters was invisible to search. Later parts of a split section start with `# <heading> (continued)`.
+- Long OpenAPI endpoints are now split into labelled parts (`GET /getImage (continued)`) instead of truncated, so no parameter is dropped at the smaller chunk size.
+- Queries are embedded with BGE's retrieval instruction ("Represent this sentence for searching relevant passages: "), as the model expects; documents are embedded without it.
+- The docs page about this MCP server (`api-integration/manuals/mcp-api-documentation.md`) is no longer indexed: it lists example questions, so it matched many unrelated queries. Configurable via `INDEX_EXCLUDE_PATHS`.
+
+### Added
+- `eval/`: a retrieval evaluation (62 questions with expected pages across identifier, how-to and concept questions, written without looking at the search code) and a script that sweeps chunk size, query instruction, search mode, fusion settings and index exclusions, scoring hit@1, hit@5 and MRR. On this set the combined changes raise hit@1 from 0.39 to 0.66, hit@5 from 0.71 to 0.85 and MRR from 0.50 to 0.74. Dev-only; excluded from the package.
+
 ## [0.1.24] - 2026-09-07
 
 ### Fixed

@@ -1,0 +1,214 @@
+{
+  "questions": [
+    {
+      "id": "b-id-01",
+      "category": "identifier",
+      "query": "interiorDescription",
+      "expected": ["openapi:GET /getImage"],
+      "why": "getImage parameter interiorDescription: used to identify the interiorId when it cannot be resolved (premium/enterprise)"
+    },
+    {
+      "id": "b-id-02",
+      "category": "identifier",
+      "query": "transmission param, automatic or manual",
+      "expected": ["openapi:GET /getImage", "openapi:GET /getCarListing"],
+      "why": "Shared transmission parameter on getImage and getCarListing: type of transmission, automatic or manual"
+    },
+    {
+      "id": "b-id-03",
+      "category": "identifier",
+      "query": "Is the width parameter capped on a freemium or limited licence?",
+      "expected": ["openapi:GET /getImage"],
+      "why": "getImage width parameter: freemium limited to 400, limited licence to 400 and 800"
+    },
+    {
+      "id": "b-id-04",
+      "category": "identifier",
+      "query": "margins default value and max",
+      "expected": ["api-integration/manuals/cdn-data-points.md"],
+      "why": "DATA POINTS table row margins: defaults to 0.02 (2%), decimal 0 to 0.4, premium/enterprise"
+    },
+    {
+      "id": "b-id-05",
+      "category": "identifier",
+      "query": "position=horizon vs center vs bottom, does it work on 360 or lifestyle shots",
+      "expected": ["api-integration/manuals/cdn-data-points.md"],
+      "why": "DATA POINTS table row position: horizon/center/bottom, fine tune with groundPlaneAdjustment, not for 360 or lifestyle"
+    },
+    {
+      "id": "b-id-06",
+      "category": "identifier",
+      "query": "what happens if I set safeMode=false",
+      "expected": ["api-integration/manuals/cdn-data-points.md", "openapi:GET /getImage"],
+      "why": "DATA POINTS row safeMode and spec safeMode (default true): prevents cut-off from zoom/margins/groundPlaneAdjustment; false allows intended cut-off"
+    },
+    {
+      "id": "b-id-07",
+      "category": "identifier",
+      "query": "getPaints result: orderable vs available flag",
+      "expected": ["api-integration/manuals/paint-data-and-api-behavior.md"],
+      "why": "Paragraph under getPaints RETURNS JSON: orderable = offered by manufacturer; available (target=car) = already rendered or rendered on first request"
+    },
+    {
+      "id": "b-id-08",
+      "category": "identifier",
+      "query": "imageURL field in the paint swatch JSON, when is it filled",
+      "expected": ["guides/getting-images/iii.-deployment-and-integration-guides-1/setting-up-color-swatches-1.md"],
+      "why": "Response Structure table: imageURL optional, link to an image file when the swatch is a complex texture"
+    },
+    {
+      "id": "b-id-09",
+      "category": "identifier",
+      "query": "angle=216",
+      "expected": ["guides/getting-images/ii.-image-customization-and-styling/selecting-angles.md"],
+      "why": "Collapsed table of 32 interactive angles: 216 is position 17 of 32, straight-on rear view at eye level"
+    },
+    {
+      "id": "b-id-10",
+      "category": "identifier",
+      "query": "pspc meaning",
+      "expected": ["faq/terminology.md"],
+      "why": "Terminology table first row: pspc = primary spray can color (spc = spray can color)"
+    },
+    {
+      "id": "b-id-11",
+      "category": "identifier",
+      "query": "Which generic imagin-* paint codes exist besides imagin-white, e.g. is there an imagin-orange?",
+      "expected": ["faq/paints.md"],
+      "why": "Paints FAQ third row: list of generic paintIds imagin-black/grey/white/blue/yellow/red/orange/green"
+    },
+    {
+      "id": "b-how-01",
+      "category": "howto",
+      "query": "send a custom Referer with axios when calling the image endpoint",
+      "expected": ["api-integration/manuals/embedding-a-referer.md"],
+      "why": "Axios example: axios.create with baseURL and get(..., { headers: { Referer } })"
+    },
+    {
+      "id": "b-how-02",
+      "category": "howto",
+      "query": "How do I put together an image link for a web page: which part identifies my account, which part describes the car and which part controls the look?",
+      "expected": ["guides/getting-images/iii.-deployment-and-integration-guides/embedding-in-your-website.md"],
+      "why": "'the URL' section: four sections END POINT, IDENTIFICATION, CAR, CUSTOMISATION plus colour-coded example URL"
+    },
+    {
+      "id": "b-how-03",
+      "category": "howto",
+      "query": "which settings tab of the web portal shows my customer key",
+      "expected": ["faq/dashboard.md"],
+      "why": "Dashboard FAQ: customer key is in dashboard settings (CDN/API)"
+    },
+    {
+      "id": "b-how-04",
+      "category": "howto",
+      "query": "the car fills too much of the frame on one static shot, how do I pull it back a little",
+      "expected": ["guides/getting-images/ii.-image-customization-and-styling/zoomlevel.md", "api-integration/manuals/cdn-data-points.md"],
+      "why": "zoomLevel page (numeric level, only with zoomType=relative, single static angles) and DATA POINTS zoomLevel row (0-30, not with fullscreen/adaptive)"
+    },
+    {
+      "id": "b-how-05",
+      "category": "howto",
+      "query": "generate descriptive alt attributes for car photos so they rank in search",
+      "expected": ["faq/seo-and-geo-optimization.md"],
+      "why": "Programmatic Alt Text Implementation: build alt text from make, modelFamily, modelYear, paintDescription in your front-end"
+    },
+    {
+      "id": "b-how-06",
+      "category": "howto",
+      "query": "Our marketing team can't code. Is there a way for them to browse the car pictures and copy a link into our CMS?",
+      "expected": ["api-integration/manuals/getting-started.md"],
+      "why": "IMAGIN.STUDIO SUITE section: browse offering and grab image URLs for a CMS at dashboard.imagin.studio"
+    },
+    {
+      "id": "b-how-07",
+      "category": "howto",
+      "query": "We just started integrating and matches look all over the place. Can we hand you a spreadsheet of our stock to get it learning faster?",
+      "expected": ["guides/data-training.md", "api-integration/manuals/getimage-api-behavior-and-timing.md"],
+      "why": "Both have the getting-started tip: an initial car data export (CSV) speeds up the initial data training"
+    },
+    {
+      "id": "b-how-08",
+      "category": "howto",
+      "query": "get a photo looking straight at the back of the car",
+      "expected": ["guides/getting-images/ii.-image-customization-and-styling/selecting-angles.md"],
+      "why": "Angle description tables: 13 is straight-on rear (bumper height), 216 straight-on rear at eye level"
+    },
+    {
+      "id": "b-how-09",
+      "category": "howto",
+      "query": "split image costs per department on our invoice",
+      "expected": ["api-integration/manuals/cdn-data-points.md", "guides/getting-images/i.-core-data-and-setup/cap-hpi-field-mapping.md"],
+      "why": "billingTag: DATA POINTS row (business unit to cross bill) and CAP HPI optional parameters table (associate call with a business unit)"
+    },
+    {
+      "id": "b-how-10",
+      "category": "howto",
+      "query": "show the vehicle with Dutch number plates",
+      "expected": ["api-integration/manuals/cdn-data-points.md", "openapi:GET /getImage", "openapi:GET /getCarListing"],
+      "why": "countryCode: DATA POINTS row (ISO code, country based plates, sample NL) and shared spec parameter (delivery region changes licence plate/lights)"
+    },
+    {
+      "id": "b-how-11",
+      "category": "howto",
+      "query": "How should I handle a colour name that contains spaces or a # sign when I put it in the request?",
+      "expected": ["faq/safe-characters.md"],
+      "why": "Safe characters FAQ: safe, reserved (; / ? : @ = &) and unsafe characters (space, \", #, % ...)"
+    },
+    {
+      "id": "b-con-01",
+      "category": "concept",
+      "query": "If someone hammers my website with junk traffic, do your pictures go down with it?",
+      "expected": ["faq/ddos-protection.md"],
+      "why": "DDoS FAQ: delivered via CloudFront with DDoS protection, artificial spikes blocked automatically"
+    },
+    {
+      "id": "b-con-02",
+      "category": "concept",
+      "query": "how far back in time does your catalogue go, can I get a car from ten years ago",
+      "expected": ["faq/coverage-of-older-cars.md", "overview/our-features.md"],
+      "why": "Coverage FAQ (focus on vehicles from 2017) and Comprehensive Model Coverage (2016 and earlier for key vehicles)"
+    },
+    {
+      "id": "b-con-03",
+      "category": "concept",
+      "query": "Can I advertise a model on my site before it even reaches dealers?",
+      "expected": ["faq/new-cars-creation.md", "guides/data-training.md", "overview/our-features.md"],
+      "why": "New cars FAQ and Data Training CAR MODELS CREATION: images shown well before release for pre-sales; Our Features: imagery available right after release announcements"
+    },
+    {
+      "id": "b-con-04",
+      "category": "concept",
+      "query": "Our feed is missing the fuel type for some cars. Is it fine to fill the gap with something like n/a so every field has a value?",
+      "expected": ["faq/unknown-data-points.md", "guides/getting-images/i.-core-data-and-setup/selecting-a-car.md", "api-integration/manuals/getting-started.md"],
+      "why": "All three say: never send 'default'/'unknown', omit the attribute or leave it empty"
+    },
+    {
+      "id": "b-con-05",
+      "category": "concept",
+      "query": "do the bigger subscriptions work out cheaper per picture",
+      "expected": ["faq/contracts.md"],
+      "why": "Contracts FAQ: four levels, higher levels cost more per month but have a lower price per unit at high volume"
+    },
+    {
+      "id": "b-con-06",
+      "category": "concept",
+      "query": "Will the browser block my front-end script from reading your JSON because my site is on another domain?",
+      "expected": ["faq/cors-headers.md"],
+      "why": "CORS headers FAQ: Allow-Origin * and Expose-Headers * on images and JSON APIs, any site can read the output"
+    },
+    {
+      "id": "b-con-07",
+      "category": "concept",
+      "query": "Is this meant to replace hiring a photographer to shoot every car in our showroom?",
+      "expected": ["overview/what-we-do-ai-driven-car-imagery-at-scale.md"],
+      "why": "What We Do intro: removes the need for costly photoshoots by linking car data to a studio image library"
+    },
+    {
+      "id": "b-con-08",
+      "category": "concept",
+      "query": "Do lookups for colour lists and the available-cars list count towards my bill?",
+      "expected": ["api-integration/manuals/embedding-a-referer.md"],
+      "why": "Hint at the bottom: getCarListing, getPaints and getPaintSwatches show up in usage but are not charged"
+    }
+  ]
+}

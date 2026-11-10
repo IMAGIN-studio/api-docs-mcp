@@ -9,7 +9,7 @@ from pathlib import Path
 
 import frontmatter
 
-from src.config import DOCS_DIR, SUPPORTED_EXTENSIONS
+from src.config import DOCS_DIR, INDEX_EXCLUDE_PATHS, SUPPORTED_EXTENSIONS
 from src.pipeline.exceptions import ParseError
 from src.pipeline.models import Document
 
@@ -17,11 +17,14 @@ from src.pipeline.models import Document
 logger = logging.getLogger(__name__)
 
 
-def discover_markdown_files(docs_dir: Path = DOCS_DIR) -> list[Path]:
+def discover_markdown_files(
+    docs_dir: Path = DOCS_DIR, exclude: frozenset[str] = INDEX_EXCLUDE_PATHS
+) -> list[Path]:
     """Find all markdown files in the docs directory.
 
     Args:
         docs_dir: Root directory to search.
+        exclude: Paths relative to *docs_dir* (POSIX style) to leave out.
 
     Returns:
         Sorted list of markdown file paths.
@@ -29,7 +32,7 @@ def discover_markdown_files(docs_dir: Path = DOCS_DIR) -> list[Path]:
     files: list[Path] = []
     for ext in SUPPORTED_EXTENSIONS:
         files.extend(docs_dir.rglob(f"*{ext}"))
-    return sorted(files)
+    return sorted(f for f in files if f.relative_to(docs_dir).as_posix() not in exclude)
 
 
 def parse_markdown_file(file_path: Path, docs_dir: Path = DOCS_DIR) -> Document:
@@ -67,16 +70,19 @@ def parse_markdown_file(file_path: Path, docs_dir: Path = DOCS_DIR) -> Document:
     )
 
 
-def parse_all_documents(docs_dir: Path = DOCS_DIR) -> list[Document]:
+def parse_all_documents(
+    docs_dir: Path = DOCS_DIR, exclude: frozenset[str] = INDEX_EXCLUDE_PATHS
+) -> list[Document]:
     """Discover and parse all markdown files in the docs directory.
 
     Args:
         docs_dir: Root directory to search.
+        exclude: Paths relative to *docs_dir* (POSIX style) to leave out.
 
     Returns:
         List of parsed Documents.
     """
-    files = discover_markdown_files(docs_dir)
+    files = discover_markdown_files(docs_dir, exclude)
     documents: list[Document] = []
 
     for file_path in files:

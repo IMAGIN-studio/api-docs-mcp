@@ -6,7 +6,7 @@ Model is downloaded once and cached in ~/.imagin-docs-mcp/models/.
 
 import logging
 
-from src.config import EMBEDDING_MODEL, MODELS_DIR
+from src.config import EMBEDDING_MODEL, EMBEDDING_QUERY_INSTRUCTION, MODELS_DIR
 from src.utils.paths import ensure_dir
 
 
@@ -50,3 +50,22 @@ class Embedder:
 
         embeddings = list(self._model.embed(texts))  # type: ignore[union-attr]
         return [e.tolist() for e in embeddings]
+
+    def embed_query(self, query: str, instruction: str = EMBEDDING_QUERY_INSTRUCTION) -> list[float]:
+        """Embed a search query.
+
+        BGE models are trained with an instruction in front of short retrieval
+        queries (documents are embedded without it). fastembed does not add it
+        for this model, so it is prepended here.
+
+        Args:
+            query: The search query.
+            instruction: Text prepended to the query; "" disables it.
+
+        Returns:
+            The query vector, or [] for an empty query.
+        """
+        if not query.strip():
+            return []
+        vectors = self.embed_texts([f"{instruction}{query}"])
+        return vectors[0] if vectors else []

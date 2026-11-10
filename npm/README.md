@@ -1,7 +1,7 @@
 # IMAGIN.studio API Docs MCP Server
 
-Semantic search over [IMAGIN.studio](https://www.imaginstudio.com/)
-[documentation](https://docs.imagin.studio/) — CDN, API, integration guides, and more.
+Give your AI coding assistant direct access to the [IMAGIN.studio](https://www.imaginstudio.com/)
+vehicle imagery API [docs](https://docs.imagin.studio/).
 
 This is a thin **npx wrapper** that finds `uvx` on your system and launches
 the Python MCP server. It solves the common problem of GUI apps (Claude

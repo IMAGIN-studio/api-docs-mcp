@@ -85,7 +85,7 @@ async def search_docs(query: str, ctx: Context, top_k: int = SEARCH_TOP_K) -> st
             "This typically takes under 30 seconds. Please retry shortly."
         )
 
-    query_vector = _embedder.embed_texts([query])
+    query_vector = _embedder.embed_query(query)
     if not query_vector:
         await ctx.error("Failed to embed query")
         return (
@@ -93,7 +93,7 @@ async def search_docs(query: str, ctx: Context, top_k: int = SEARCH_TOP_K) -> st
             "(e.g., 'CDN cache invalidation' instead of 'caching')."
         )
 
-    results = _store.search(query_vector[0], top_k=top_k)
+    results = _store.search(query_vector, top_k=top_k, query_text=query)
     elapsed_ms = (time.monotonic() - start) * 1000
 
     if not results:

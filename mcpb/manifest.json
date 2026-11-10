@@ -1,13 +1,13 @@
 {
   "manifest_version": "0.4",
   "name": "imagin-studio-api-docs-mcp",
-  "display_name": "IMAGIN.studio Docs",
-  "version": "0.1.24",
-  "description": "Semantic search over IMAGIN.studio documentation — CDN, API, integration guides, and more.",
+  "display_name": "IMAGIN.studio API Docs",
+  "version": "0.1.27",
+  "description": "Give your AI coding assistant direct access to the IMAGIN.studio vehicle imagery API docs.",
   "author": {
     "name": "IMAGIN.studio",
     "email": "service@imagin.studio",
-    "url": "https://imagin.studio"
+    "url": "https://www.imaginstudio.com/"
   },
   "server": {
     "type": "uv",
@@ -27,7 +27,7 @@
     "type": "git",
     "url": "https://github.com/IMAGIN-studio/api-docs-mcp"
   },
-  "homepage": "https://imagin.studio",
+  "homepage": "https://www.imaginstudio.com/",
   "keywords": ["imagin", "documentation", "search", "rag", "cdn"],
   "compatibility": {
     "platforms": ["darwin", "linux", "win32"],
