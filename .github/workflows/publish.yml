@@ -1,5 +1,6 @@
 ---
-# Publish to PyPI, npm, ghcr.io and the official MCP Registry when Bitbucket
+# Publish to PyPI, npm, ghcr.io, the official MCP Registry and the GitHub
+# Release (Claude Desktop extension) when Bitbucket
 # CI pushes a new release commit. Bitbucket handles validation (lint,
 # type-check, tests, security scans). This workflow only runs the publish steps.
 name: Publish
@@ -123,8 +124,111 @@ jobs:
           tar xzf "$archive" mcp-publisher
           rm -f "$archive"
 
+      # The PyPI and npm jobs finish before their registries serve the new
+      # version (npm: "may take a few minutes to become available"); the MCP
+      # Registry rejects versions it cannot fetch yet. Wait until every package
+      # in server.json is served, up to 10 minutes each. This also catches an
+      # npm publish that failed behind its "|| echo" fallback.
+      - name: Wait until PyPI and npm serve the release
+        run: |
+          set -euo pipefail
+          jq -r '.packages[] | "\(.registryType) \(.identifier) \(.version)"' server.json |
+          while read -r type id version; do
+            case "$type" in
+              pypi) url="https://pypi.org/pypi/${id}/${version}/json" ;;
+              npm)  url="https://registry.npmjs.org/${id/\//%2f}/${version}" ;;
+              *)    echo "No availability check for ${type} ${id}"; continue ;;
+            esac
+            for attempt in $(seq 1 40); do
+              if curl --fail --silent --output /dev/null "$url"; then
+                echo "Available: ${type} ${id} ${version}"
+                continue 2
+              fi
+              echo "Waiting for ${type} ${id} ${version} (${attempt}/40)"
+              sleep 15
+            done
+            echo "::error::${type} ${id} ${version} not available after 10 minutes"
+            exit 1
+          done
+
       - name: Authenticate to MCP Registry
         run: ./mcp-publisher login github-oidc
 
+      # Retry in case the registry's own fetch lags behind the check above.
       - name: Publish server.json
-        run: ./mcp-publisher publish
+        run: |
+          for attempt in 1 2 3; do
+            if ./mcp-publisher publish; then exit 0; fi
+            echo "Publish attempt ${attempt} failed; retrying in 30 seconds"
+            sleep 30
+          done
+          exit 1
+
+  # Builds the Claude Desktop extension (.mcpb) and attaches it to this
+  # version's GitHub Release. The bundle holds only manifest.json,
+  # pyproject.toml and server.py: Claude Desktop's uv runtime installs the
+  # package from PyPI on first start, so nothing here waits for PyPI.
+  # The asset name carries no version, so
+  # releases/latest/download/imagin-studio-api-docs-mcp.mcpb always points at
+  # the newest build.
+  publish-mcpb:
+    name: Attach Claude Desktop extension to the GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      # Pinned release (at least two weeks old); npm's --before below keeps
+      # its dependencies to releases at least two weeks old as well.
+      MCPB_CLI_VERSION: 2.1.2
+      MCPB_ASSET: imagin-studio-api-docs-mcp.mcpb
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
+        with:
+          node-version: "22"
+
+      # The extension version must match the package version, or Claude
+      # Desktop would show one version while running another.
+      - name: Check extension version
+        run: |
+          set -euo pipefail
+          version=$(grep '^version' pyproject.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          manifest=$(jq -r .version mcpb/manifest.json)
+          if [ "$version" != "$manifest" ]; then
+            echo "::error::mcpb/manifest.json is ${manifest}, pyproject.toml is ${version}"
+            exit 1
+          fi
+          echo "VERSION=${version}" >> "$GITHUB_ENV"
+
+      - name: Install mcpb CLI
+        run: |
+          cutoff=$(date -u -d '14 days ago' +%Y-%m-%dT%H:%M:%SZ)
+          npm install --prefix "$RUNNER_TEMP/mcpb-cli" --no-audit --no-fund \
+            --before="$cutoff" "@anthropic-ai/mcpb@${MCPB_CLI_VERSION}"
+
+      - name: Validate and pack
+        run: |
+          set -euo pipefail
+          mcpb="$RUNNER_TEMP/mcpb-cli/node_modules/.bin/mcpb"
+          "$mcpb" validate mcpb/manifest.json
+          "$mcpb" pack mcpb "$MCPB_ASSET"
+
+      # The Bitbucket prod pipeline creates the release right after it pushes
+      # this commit, so it may not exist yet when this job starts.
+      - name: Wait for the GitHub Release
+        run: |
+          for attempt in $(seq 1 40); do
+            if gh release view "v${VERSION}" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+              exit 0
+            fi
+            echo "Waiting for release v${VERSION} (${attempt}/40)"
+            sleep 15
+          done
+          echo "::error::Release v${VERSION} not found after 10 minutes"
+          exit 1
+
+      # --clobber makes a re-run replace the asset instead of failing.
+      - name: Upload extension
+        run: gh release upload "v${VERSION}" "$MCPB_ASSET" --repo "$GITHUB_REPOSITORY" --clobber

@@ -37,7 +37,7 @@ Everything runs locally. No API keys. No external services.
 | Agent | Config location |
 |-------|----------------|
 | **Claude Code** | `.mcp.json` in project root |
-| **Claude Desktop** | `claude_desktop_config.json` |
+| **Claude Desktop** | One-click extension (below) or `claude_desktop_config.json` |
 | **Cursor** | Settings > Tools & MCP |
 | **Windsurf** | `~/.codeium/windsurf/mcp_config.json` |
 | **VS Code + Copilot** | `.vscode/mcp.json` |
@@ -60,6 +60,10 @@ If your agent can't find `uvx` (common with GUI apps like Claude Desktop and Cur
   }
 }
 ```
+
+## Claude Desktop: one-click extension
+
+Download [imagin-studio-api-docs-mcp.mcpb](https://github.com/IMAGIN-studio/api-docs-mcp/releases/latest/download/imagin-studio-api-docs-mcp.mcpb) from the latest release and open it: Claude Desktop shows an install screen. No config file to edit, and Claude Desktop installs the server's dependencies itself.
 
 ## What You Can Ask
 

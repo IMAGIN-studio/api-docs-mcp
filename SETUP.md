@@ -232,6 +232,12 @@ To debug connection issues, run: `claude --mcp-debug`
 
 ### 4B. Claude Desktop App
 
+> **Quickest:** download
+> [imagin-studio-api-docs-mcp.mcpb](https://github.com/IMAGIN-studio/api-docs-mcp/releases/latest/download/imagin-studio-api-docs-mcp.mcpb)
+> from the latest release and open it. Claude Desktop installs it as an
+> extension, with no config file or full `uvx` path needed. The steps below
+> are the manual alternative.
+
 > If you already have MCP servers installed via Desktop Extensions
 > (Settings > Extensions), those are managed separately by Claude and will
 > keep working. The steps below add a stdio server via the config file,

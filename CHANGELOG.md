@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.29] - 2026-11-10
+
+### Added
+- Every release now attaches the Claude Desktop extension to its GitHub Release as `imagin-studio-api-docs-mcp.mcpb` (new `publish-mcpb` job). The job checks that the extension version matches the package version, packs `mcpb/` with the `@anthropic-ai/mcpb` CLI 2.1.2 (its dependencies held to releases at least two weeks old with npm's `--before`), waits for the release that the Bitbucket prod pipeline creates, and uploads the file. Until now no release built the extension, so its name and texts reached nobody.
+- README and setup guide link the one-click install: `releases/latest/download/imagin-studio-api-docs-mcp.mcpb` always serves the newest build.
+
+### Fixed
+- Claude Desktop extension: the uv runtime now starts the server with `uv run --directory ${__dirname} server.py`, as in the official MCPB uv example. The old `uv run ${__dirname}/server.py` looked for `pyproject.toml` in the host's working folder instead of the bundle, so the package was never installed and the server stopped with `No module named 'src'`.
+- CI: the MCP Registry job now waits until PyPI and npm actually serve the new version (up to 10 minutes per package, read from `server.json`) before logging in and publishing, and retries the publish up to 3 times. In the 0.1.28 release the registry validated 77 seconds before npm made the version visible ("version '0.1.28' was not found") and the job failed. Also turns a silently failed npm publish (its `|| echo` fallback) into a visible error.
+
+### Removed
+- `mcpb/server/index.js`, an old Node wrapper from before the extension used the uv runtime. The bundle already excluded it, and it still pointed at TestPyPI. The `server/` line in `mcpb/.mcpbignore` went with it.
+
 ## [0.1.28] - 2026-11-10
 
 ### Added

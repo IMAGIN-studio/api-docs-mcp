@@ -1,6 +1,6 @@
 {
   "name": "@imagin.studio/api-docs-mcp",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "mcpName": "io.github.IMAGIN-studio/api-docs-mcp",
   "description": "Give your AI coding assistant direct access to the IMAGIN.studio vehicle imagery API docs.",
   "bin": {
